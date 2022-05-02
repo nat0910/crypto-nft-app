@@ -16,7 +16,7 @@ export default function NftSearchResult({data}) {
       method: 'GET',
       headers: {
         'X-RapidAPI-Host': 'opensea13.p.rapidapi.com',
-        'X-RapidAPI-Key': '5a63e987b7msh89e9e11e77b210dp18efd4jsn442fa48655fe',
+        'X-RapidAPI-Key': {/* Your Rapid Api key */},
       },
     };
     let req = await fetch(url, options);

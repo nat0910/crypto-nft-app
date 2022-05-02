@@ -26,7 +26,7 @@ import {SIZES} from './src/assets/constant/Theme';
 export default function App() {
   const [pageNo, setPageNo] = useState(1);
 
-  const news_data_url = `https://newsdata.io/api/1/news?apikey{/* Your newsdata.io Api Key */}&q=crypto%20OR%20nft&language=en&page=${pageNo}`;
+  const news_data_url = `https://newsdata.io/api/1/news?apikey={/* Your newsdata.io Api Key */}&q=crypto%20OR%20nft&language=en&page=${pageNo}`;
   const nft_collection_url =
     'https://webit-nft-search.p.rapidapi.com/collections/trending?chain=ethereum&number=25';
 
@@ -45,7 +45,9 @@ export default function App() {
       method: 'GET',
       headers: {
         'X-RapidAPI-Host': 'webit-nft-search.p.rapidapi.com',
-        'X-RapidAPI-Key':  {/* Your Rapid Api Key */} ,
+        'X-RapidAPI-Key': {
+          /* Your Rapid Api Key */
+        },
       },
     };
 
@@ -61,7 +63,9 @@ export default function App() {
       method: 'GET',
       headers: {
         'X-RapidAPI-Host': 'opensea13.p.rapidapi.com',
-        'X-RapidAPI-Key': '6717f9e2cbmsh3597d90ff7f57a1p110b75jsnc8d9de89d957',
+        'X-RapidAPI-Key': {
+          /* Your Rapid Api Key */
+        },
       },
     };
     let req = await fetch(

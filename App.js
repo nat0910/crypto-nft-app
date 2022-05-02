@@ -1,7 +1,11 @@
 import {View, Text, SafeAreaView} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState, useLayoutEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import MMKVStorage from 'react-native-mmkv-storage';
+import axios from 'axios';
+
+const MMKV = new MMKVStorage.Loader().initialize();
 
 const Tab = createBottomTabNavigator();
 
@@ -20,6 +24,62 @@ import TabBarContent from './src/components/TabBarContent';
 import {SIZES} from './src/assets/constant/Theme';
 
 export default function App() {
+  const [pageNo, setPageNo] = useState(1);
+
+  const news_data_url = `https://newsdata.io/api/1/news?apikey=pub_63005411bb37fa08c817c167ac02c464c317&q=crypto%20OR%20nft&language=en&page=${pageNo}`;
+  const nft_collection_url =
+    'https://webit-nft-search.p.rapidapi.com/collections/trending?chain=ethereum&number=25';
+
+  const asset_data_url =
+    'https://opensea13.p.rapidapi.com/assets?collection_slug=cryptopunks&order_direction=desc&limit=20&include_orders=false';
+
+  async function fetchNewsData(url) {
+    let req = await fetch(url);
+    let res = await req.json();
+    let {results} = res;
+    await MMKV.setArrayAsync(`NftorCryptoNews${pageNo}`, results);
+  }
+
+  async function fetchNftCollection(url) {
+    const options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Host': 'webit-nft-search.p.rapidapi.com',
+        'X-RapidAPI-Key': '6717f9e2cbmsh3597d90ff7f57a1p110b75jsnc8d9de89d957',
+      },
+    };
+
+    let req = await fetch(url, options);
+    let res = await req.json();
+    let {data} = res;
+    console.log(data);
+    // await MMKV.setArrayAsync('TrendingNftAddress', res.data.results);
+  }
+
+  async function AssetData(url) {
+    const options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Host': 'opensea13.p.rapidapi.com',
+        'X-RapidAPI-Key': '6717f9e2cbmsh3597d90ff7f57a1p110b75jsnc8d9de89d957',
+      },
+    };
+    let req = await fetch(
+      'https://opensea13.p.rapidapi.com/assets?order_direction=desc&limit=50&include_orders=false',
+      options,
+    );
+    let res = await req.json();
+    let {assets} = res;
+    // await MMKV.setArrayAsync('AssetData', assets);
+  }
+
+  useLayoutEffect(() => {
+    // console.log(news_data_url);
+    fetchNewsData(news_data_url);
+    // fetchNftCollection(nft_collection_url);
+    AssetData(asset_data_url);
+  }, []);
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#ffffff'}}>
       <NavigationContainer>
@@ -61,8 +121,9 @@ export default function App() {
             options={{
               tabBarButton: props => <TabBarContent label="news" {...props} />,
             }}
-            name="News"
-            component={News}></Tab.Screen>
+            name="News">
+            {props => <News setPageNo={setPageNo} pageNo={pageNo} {...props} />}
+          </Tab.Screen>
         </Tab.Navigator>
       </NavigationContainer>
     </SafeAreaView>

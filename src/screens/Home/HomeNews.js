@@ -7,20 +7,27 @@ import {
   TouchableWithoutFeedback,
   Linking,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Home_data} from './routedata';
 import SeeAll from '../../components/SeeAll';
 import uuid from 'react-native-uuid';
-
+import MMKVStorage from 'react-native-mmkv-storage';
 import {SIZES, COLORS} from '../../assets/constant/Theme';
 
-export default function HomeNews({navigation}) {
-  const [newArticles, setNewArticles] = React.useState('');
-  const [newsArticlesData, setNewsArticlesData] = React.useState([]);
+const MMKV = new MMKVStorage.Loader().initialize();
 
-  React.useEffect(() => {
-    setNewArticles(Home_data.home_news_data);
-  }, [Home_data.home_news_data]);
+export default function HomeNews({navigation}) {
+  const [newArticles, setNewArticles] = useState([]);
+  const [newsArticlesData, setNewsArticlesData] = useState([]);
+
+  async function fetchData() {
+    let resData = await MMKV.getArrayAsync(`NftorCryptoNews1`);
+    setNewArticles(resData);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   // const news_data_url =
   //   'https://newsdata.io/api/1/news?apikey=pub_63005411bb37fa08c817c167ac02c464c317&q=nft&language=en ';
@@ -51,7 +58,9 @@ export default function HomeNews({navigation}) {
         backgroundColor: 'white',
         paddingHorizontal: 6,
         paddingVertical: 6,
-        elevation: .7,
+        elevation: 1,
+        borderTopColor: COLORS.gray,
+        borderTopWidth: 0.3,
       }}>
       <View
         style={{
@@ -175,7 +184,7 @@ export default function HomeNews({navigation}) {
 
           paddingBottom: 25,
         }}
-        data={newArticles}
+        data={newArticles.slice(0, 5)}
         renderItem={renderItem}
         keyExtractor={item => `${uuid.v4()}`}
         bounces={false}

@@ -8,7 +8,7 @@ export default function SearchBar({navigation, label}) {
     <View
       style={{
         width: SIZES.width,
-        height: 75,
+        height: 65,
         backgroundColor: COLORS.transparent,
         alignItems: 'center',
         paddingHorizontal: 15,
@@ -17,7 +17,7 @@ export default function SearchBar({navigation, label}) {
       <TouchableOpacity
         style={{
           backgroundColor: COLORS.white,
-          height: 45,
+          height: 42.5,
           width: SIZES.width - 30,
           borderRadius: 12.5,
           elevation: 2,
@@ -75,7 +75,7 @@ export default function SearchBar({navigation, label}) {
               </Text>
             </View>
           </View>
-          <View
+          {/* <View
             style={{
               width: 20,
               height: 21,
@@ -89,7 +89,7 @@ export default function SearchBar({navigation, label}) {
                 tintColor: '#7F7FFF',
               }}
             />
-          </View>
+          </View> */}
         </View>
       </TouchableOpacity>
     </View>

@@ -1,29 +1,39 @@
 import {
   View,
   Text,
-  TouchableOpacity,
-  Image,
   TouchableWithoutFeedback,
+  Image,
   TextInput,
   FlatList,
 } from 'react-native';
-import React, {useState, useEffect, useRef} from 'react';
-import {COLORS, SIZES} from '../../assets/constant/Theme';
-import CryproSearchResult from '../../components/CryproSearchResult';
+import React, {useState, useEffect} from 'react';
+import {SIZES, COLORS} from '../../assets/constant/Theme';
+import uuid from 'react-native-uuid';
+import NftSearchResult from './NftSearchResult';
 
-export default function SearchScreenCrypto({navigation}) {
+export default function NftSearchScreen({navigation}) {
   const [searchValue, setSearchValue] = useState(null);
-  const [searchcoinsData, setSearchCoinsData] = useState([]);
+  const [data, setData] = useState([]);
 
   async function fetchData(url) {
-    let req = await fetch(url);
-    let {coins} = await req.json();
-    setSearchCoinsData(coins);
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        'X-API-Key':
+          'sallsoByzIVpaDd6NP0moa8lHiHzYV2xshBREBmLtgKroUv4qnOzbUI0gIuITUL0',
+      },
+    };
+
+    let req = await fetch(url, options);
+    let res = await req.json();
+    let {result} = res;
+    setData(result);
   }
 
-  React.useEffect(() => {
-    const data_url = `https://api.coingecko.com/api/v3/search?query=${searchValue}`;
-    fetchData(data_url);
+  useEffect(() => {
+    const search_data_url = `https://deep-index.moralis.io/api/v2/nft/search?chain=eth&format=decimal&q=${searchValue}%20Ape&filter=name%2Cdescription%2Cattributes&limit=8`;
+    fetchData(search_data_url);
   }, [searchValue]);
 
   return (
@@ -94,19 +104,23 @@ export default function SearchScreenCrypto({navigation}) {
         </View>
       </View>
       <FlatList
-        data={searchcoinsData}
-        renderItem={({item}) => (
-          <CryproSearchResult item={item} navigation={navigation} />
-        )}
-        keyExtractor={item => item.id}
-        bounces={false}
-        contentContainerStyle={{
-          marginTop: 15,
-          marginHorizontal: 20,
-          paddingBottom: 50,
+        data={data}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={item => uuid.v4()}
+        style={{
+          marginHorizontal: 16,
+          // backgroundColor: 'pink'
         }}
-        initialNumToRender={7}
-        removeClippedSubviews
+        numColumns={2}
+        columnWrapperStyle={{
+          justifyContent: 'space-between',
+          marginTop: 20,
+        }}
+        contentContainerStyle={{
+          paddingBottom: 25,
+        }}
+        initialNumToRender={2}
+        renderItem={item => <NftSearchResult data={item} />}
       />
     </>
   );

@@ -87,7 +87,7 @@ export default function CryptoProductPage({navigation, route}) {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setGraphLoading(true);
-    }, 1000);
+    }, 1500);
     return () => {
       clearTimeout(timeout);
     };
@@ -104,7 +104,7 @@ export default function CryptoProductPage({navigation, route}) {
       <View
         style={{
           width: SIZES.width,
-          height: 75,
+          height: 65,
           backgroundColor: COLORS.transparent,
           alignItems: 'center',
           paddingHorizontal: 15,
@@ -647,7 +647,7 @@ export default function CryptoProductPage({navigation, route}) {
                   textAlign: 'right',
                 }}>
                 {new Date(
-                  cryptoDetails?.market_data?.atl_date?.inr,
+                  cryptoDetails?.market_data?.ath_date?.inr,
                 ).toDateString()}
               </Text>
             </View>

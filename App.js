@@ -28,7 +28,7 @@ export default function App() {
 
   console.log(pageNo);
 
-  const news_data_url = `https://newsdata.io/api/1/news?apikey=pub_63005411bb37fa08c817c167ac02c464c317&q=crypto%20OR%20nft&language=en&page=${pageNo}`;
+  const news_data_url = `https://newsdata.io/api/1/news?apikey={/* Enter your Api key */},&q=crypto%20OR%20nft&language=en&page=${pageNo}`;
   console.log(news_data_url);
   const nft_collection_url =
     'https://webit-nft-search.p.rapidapi.com/collections/trending?chain=ethereum&number=25';
@@ -48,7 +48,7 @@ export default function App() {
       method: 'GET',
       headers: {
         'X-RapidAPI-Host': 'webit-nft-search.p.rapidapi.com',
-        'X-RapidAPI-Key': '6717f9e2cbmsh3597d90ff7f57a1p110b75jsnc8d9de89d957',
+        'X-RapidAPI-Key': {/* Enter your Api key */},
       },
     };
 
@@ -64,7 +64,9 @@ export default function App() {
       method: 'GET',
       headers: {
         'X-RapidAPI-Host': 'opensea13.p.rapidapi.com',
-        'X-RapidAPI-Key': '6717f9e2cbmsh3597d90ff7f57a1p110b75jsnc8d9de89d957',
+        'X-RapidAPI-Key': {
+          /* Enter your Api key */
+        },
       },
     };
     let req = await fetch(

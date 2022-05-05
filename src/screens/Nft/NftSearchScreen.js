@@ -20,9 +20,8 @@ export default function NftSearchScreen({navigation}) {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        'X-API-Key': {
-          /* Your Api Key */
-        },
+        'X-API-Key':
+          'sallsoByzIVpaDd6NP0moa8lHiHzYV2xshBREBmLtgKroUv4qnOzbUI0gIuITUL0',
       },
     };
 
@@ -33,7 +32,7 @@ export default function NftSearchScreen({navigation}) {
   }
 
   useEffect(() => {
-    const search_data_url = `https://deep-index.moralis.io/api/v2/nft/search?chain=eth&format=decimal&q=${searchValue}%20Ape&filter=name%2Cdescription%2Cattributes&limit=8`;
+    const search_data_url = `https://deep-index.moralis.io/api/v2/nft/search?chain=eth&format=decimal&q=${searchValue}&filter=name&limit=8`;
     fetchData(search_data_url);
   }, [searchValue]);
 
@@ -100,7 +99,7 @@ export default function NftSearchScreen({navigation}) {
               placeholderTextColor="#AAAAE3"
               onChangeText={text => setSearchValue(text)}
               value={searchValue}
-              placeholder='search "bitcoin" or "btc" '></TextInput>
+              placeholder='search "Bored Ape or doodles'></TextInput>
           </View>
         </View>
       </View>
@@ -109,7 +108,7 @@ export default function NftSearchScreen({navigation}) {
         showsVerticalScrollIndicator={false}
         keyExtractor={item => uuid.v4()}
         style={{
-          marginHorizontal: 16,
+          marginHorizontal: 10,
           // backgroundColor: 'pink'
         }}
         numColumns={2}

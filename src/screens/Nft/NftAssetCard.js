@@ -8,10 +8,17 @@ import {
 import React from 'react';
 import {COLORS} from '../../assets/constant/Theme';
 
-export default function NftAssetCard({data}) {
+export default function NftAssetCard({data, navigation}) {
   let {item} = data;
+
+  // console.log(
+  //   `https://opensea.io/assets/${item?.asset_contract?.address}/${item?.token_id}`,
+  // );
   return (
-    <TouchableWithoutFeedback onPress={() => Linking.openURL(item.permalink)}>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        navigation.navigate('nftProductPage', item);
+      }}>
       <View
         style={{
           height: 250,
@@ -35,13 +42,14 @@ export default function NftAssetCard({data}) {
             style={{
               borderRadius: 10,
               height: 160,
+              width: '100%',
               resizeMode: 'contain',
             }}
             source={
-              item.image_thumbnail_url == null
+              item.image_url == null
                 ? require('../../assets/images/opensea-logo-svg-cut-file.jpg')
                 : {
-                    uri: item.image_thumbnail_url,
+                    uri: item.image_url,
                   }
             }
           />
@@ -67,7 +75,7 @@ export default function NftAssetCard({data}) {
               }}
               numberOfLines={2}
               ellipsizeMode="tail">
-              {item?.name}
+              {item.name == null ? `#${item.token_id}` : item.name}
             </Text>
           </View>
           <View
@@ -78,7 +86,7 @@ export default function NftAssetCard({data}) {
             <Text
               style={{
                 color: COLORS.darkGray2,
-                fontSize: 11.5,
+                fontSize: 12,
                 fontFamily: 'Poppins-Medium',
                 maxWidth: 115,
               }}

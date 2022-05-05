@@ -8,9 +8,11 @@ import {
 import React from 'react';
 import {COLORS} from '../../assets/constant/Theme';
 
-export default function NewsCard({item}) {
+export default function NewsCard({item, navigation}) {
+  // console.log(navigation);
   return (
-    <TouchableWithoutFeedback>
+    <TouchableWithoutFeedback
+      onPress={() => navigation.navigate('NewsProductPage', item)}>
       <View
         style={{
           width: '100%',
@@ -27,9 +29,7 @@ export default function NewsCard({item}) {
           marginTop: 15,
         }}>
         <TouchableWithoutFeedback
-          onPress={() => {
-            Linking.openURL(item.link);
-          }}>
+          onPress={() => navigation.navigate('NewsProductPage', item)}>
           <View
             style={{
               height: 200,

@@ -14,11 +14,11 @@ export default function HomeHeader() {
       }}>
       <View
         style={{
+          width: '100%',
           flexDirection: 'row',
           alignSelf: 'center',
           justifyContent: 'space-between',
           alignItems: 'center',
-          paddingHorizontal: 28,
         }}>
         <Text
           style={{
@@ -29,17 +29,18 @@ export default function HomeHeader() {
             letterSpacing: 2,
             paddingTop: 0,
             paddingBottom: 10,
+            textAlign: 'center',
           }}>
           CrypNft
         </Text>
-        <Image
+        {/* <Image
           source={require('../../assets/icons/settings-active.png')}
           style={{
             width: 24,
             height: 24,
             tintColor: COLORS.white,
           }}
-        />
+        /> */}
       </View>
     </View>
   );

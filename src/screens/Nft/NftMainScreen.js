@@ -13,7 +13,9 @@ export default function NftMainScreen({data, navigation}) {
         data={data}
         showsVerticalScrollIndicator={false}
         keyExtractor={item => uuid.v4()}
-        renderItem={item => <NftAssetCard data={item} />}
+        renderItem={item => (
+          <NftAssetCard data={item} navigation={navigation} />
+        )}
         style={{
           marginHorizontal: 16,
           // backgroundColor: 'pink'

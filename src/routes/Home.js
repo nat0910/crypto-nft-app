@@ -10,6 +10,8 @@ const Stack = createStackNavigator();
 }
 import MainHomeScreen from '../screens/Home/MainHomeScreen';
 import CryptoProductPage from '../components/cryptoProductPage';
+import NftProductPage from '../components/NftProductPage';
+import NewsProductPage from '../components/newsProductPage';
 
 export default function Home({navigation}) {
   return (
@@ -20,6 +22,8 @@ export default function Home({navigation}) {
       }}>
       <Stack.Screen name="MainHomeScreen" component={MainHomeScreen} />
       <Stack.Screen name="cryptoProductPage" component={CryptoProductPage} />
+      <Stack.Screen name="nftProductPage" component={NftProductPage} />
+      <Stack.Screen name="NewsProductPage" component={NewsProductPage} />
     </Stack.Navigator>
   );
 }

@@ -4,57 +4,69 @@ import {
   ImageBackground,
   FlatList,
   Image,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
-import React from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {COLORS, SIZES} from '../../assets/constant/Theme';
 import SeeAll from '../../components/SeeAll';
 import {Home_data} from './routedata';
+import MMKVStorage from 'react-native-mmkv-storage';
+
+const MMKV = new MMKVStorage.Loader().initialize();
+
+import NftAssetCard from '../Nft/NftAssetCard';
 
 export default function HomeNft({navigation}) {
   const renderItem = ({item, index}) => (
-    <TouchableOpacity
-      style={{
-        width: 170,
-        height: 250,
-        marginLeft: index == 0 ? 16 : 0,
-        borderRadius: 15,
-        marginRight: index == 3 ? 16 : 12.5,
-        paddingVertical: 6,
-        paddingHorizontal: 5,
-        backgroundColor: COLORS.white,
-        borderColor: COLORS.gray3,
-        borderBottomWidth: 1.15,
-        borderLeftWidth: 0.5,
-        borderRightWidth: 0.5,
+    <TouchableWithoutFeedback
+      onPress={() => {
+        navigation.navigate('nftProductPage', item);
       }}>
       <View
         style={{
-          height: '100%',
-          width: '100%',
+          height: 250,
+          width: 175,
+          backgroundColor: COLORS.white,
+          borderColor: COLORS.gray2,
+          borderWidth: 0.7,
+          borderRadius: 13,
+          // elevation: 1.7,
+          paddingHorizontal: 5,
+          paddingVertical: 5,
+          borderTopWidth: 0.2,
+          marginLeft: index == 0 ? 16 : 0,
+          marginRight: index == 4 ? 16 : 10,
         }}>
-        {/* Nft Image */}
+        {/* Image Conatiner */}
 
         <View
           style={{
-            height: 150,
-            width: '100%',
+            height: 160,
+            borderRadius: 10,
           }}>
           <Image
-            source={item.image}
-            resizeMode="cover"
             style={{
-              height: '100%',
+              borderRadius: 10,
+              height: 160,
               width: '100%',
-              borderRadius: 12,
+              resizeMode: 'contain',
             }}
+            source={
+              item.image_url == null
+                ? require('../../assets/images/opensea-logo-svg-cut-file.jpg')
+                : {
+                    uri: item.image_url,
+                  }
+            }
           />
         </View>
-        {/* Nft Details */}
+        {/* Nft Detials */}
         <View
           style={{
-            marginVertical: 10,
-            marginHorizontal: 7,
+            marginVertical: 6,
+            paddingHorizontal: 5,
+            justifyContent: 'space-evenly',
+            height: 60,
           }}>
           {/* Nft Name */}
           <View
@@ -63,97 +75,61 @@ export default function HomeNft({navigation}) {
             }}>
             <Text
               style={{
-                color: COLORS.black,
+                color: '#04143D',
                 fontFamily: 'Poppins-Medium',
-                fontSize: 14,
-              }}>
-              {item.name}
+                fontSize: 13.5,
+              }}
+              numberOfLines={2}
+              ellipsizeMode="tail">
+              {item.name == null ? `#${item.token_id}` : item.name}
             </Text>
           </View>
-          {/* Collection Name */}
           <View
             style={{
               flexDirection: 'row',
+              alignItems: 'center',
             }}>
             <Text
               style={{
                 color: COLORS.darkGray2,
-                fontSize: 11.5,
+                fontSize: 12,
                 fontFamily: 'Poppins-Medium',
-                maxWidth: 100,
+                maxWidth: 115,
               }}
               numberOfLines={1}
               ellipsizeMode="tail">
-              {item.collection}
+              {item?.collection?.name}
             </Text>
-
-            <Image
-              style={{
-                width: 12,
-                height: 11.5,
-                marginTop: 2,
-                marginLeft: 2,
-              }}
-              source={require('../../assets/icons/verified.png')}
-            />
-          </View>
-          {/* Current Bid */}
-          <View
-            style={{
-              flexDirection: 'row',
-              marginTop: 5,
-              width: '100%',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <View>
-              <Text
-                style={{
-                  color: COLORS.gray,
-                  fontFamily: 'Poppins-Medium',
-                  fontSize: 12,
-                  marginTop: 2,
-                }}>
-                Current Bid
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
+            {item?.collection.safelist_request_status != 'verified' ? null : (
               <Image
-                source={require('../../assets/icons/ethereum.png')}
-                resizeMode="contain"
                 style={{
-                  height: 17,
-                  width: 15,
-                  marginRight: 0.5,
+                  width: 12,
+                  height: 11.5,
                 }}
+                source={require('../../assets/icons/verified.png')}
               />
-              <Text
-                style={{
-                  fontSize: 13,
-                  fontFamily: 'Poppins-Medium',
-                  color: COLORS.black,
-                  marginTop: 2,
-                }}>
-                {item.last_bid}{' '}
-                <Text
-                  style={{
-                    fontSize: 13,
-                    fontFamily: 'Poppins-Medium',
-                    color: COLORS.darkGray2,
-                  }}>
-                  ETH
-                </Text>
-              </Text>
-            </View>
+            )}
           </View>
         </View>
       </View>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   );
+
+  const [data, setData] = useState([]);
+  const [sliceddata, setSliceData] = useState([]);
+
+  async function assetData() {
+    let resData = await MMKV.getArrayAsync('AssetData');
+    setData(resData);
+    let vasl = resData.slice(0, 5);
+    setSliceData(vasl);
+  }
+
+  // console.log(data[0].permalink);
+
+  useLayoutEffect(() => {
+    assetData();
+  }, []);
 
   return (
     <View
@@ -180,7 +156,7 @@ export default function HomeNft({navigation}) {
               width: '100%',
             }}>
             <SeeAll
-              label={"Trending Nft's"}
+              label={"View Nft's"}
               navigateLabel={'Nft'}
               navigation={navigation}
             />
@@ -192,7 +168,7 @@ export default function HomeNft({navigation}) {
               marginTop: 20,
               paddingBottom: 25,
             }}
-            data={Home_data.home_nft_cont}
+            data={sliceddata}
             keyExtractor={item => item.id}
             renderItem={renderItem}
           />

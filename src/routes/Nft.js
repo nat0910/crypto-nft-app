@@ -13,6 +13,7 @@ const Stack = createStackNavigator();
 }
 import NftMainScreen from '../screens/Nft/NftMainScreen';
 import NftSearchScreen from '../screens/Nft/NftSearchScreen';
+import NftProductPage from '../components/NftProductPage';
 
 export default function Nft() {
   const [data, setData] = useState([]);
@@ -38,6 +39,7 @@ export default function Nft() {
         {props => <NftMainScreen data={data} {...props} />}
       </Stack.Screen>
       <Stack.Screen name="nftSearchScreen" component={NftSearchScreen} />
+      <Stack.Screen name="nftProductPage" component={NftProductPage} />
     </Stack.Navigator>
   );
 }

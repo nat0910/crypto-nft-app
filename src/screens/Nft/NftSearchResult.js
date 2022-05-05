@@ -16,12 +16,13 @@ export default function NftSearchResult({data}) {
       method: 'GET',
       headers: {
         'X-RapidAPI-Host': 'opensea13.p.rapidapi.com',
-        'X-RapidAPI-Key': {/* Your Rapid Api key */},
+        // 'X-RapidAPI-Key': '6717f9e2cbmsh3597d90ff7f57a1p110b75jsnc8d9de89d957',
       },
     };
     let req = await fetch(url, options);
     let res = await req.json();
     setItem(res);
+    console.log(res);
   }
 
   useEffect(() => {
@@ -44,10 +45,10 @@ export default function NftSearchResult({data}) {
       <View
         style={{
           height: 250,
-          width: 175,
+          width: 180,
           backgroundColor: COLORS.white,
           borderColor: COLORS.gray2,
-          borderWidth: 0.7,
+          borderWidth: 0.5,
           borderRadius: 13,
           // elevation: 1.7,
           paddingHorizontal: 5,

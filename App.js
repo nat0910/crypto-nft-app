@@ -26,7 +26,10 @@ import {SIZES} from './src/assets/constant/Theme';
 export default function App() {
   const [pageNo, setPageNo] = useState(1);
 
-  const news_data_url = `https://newsdata.io/api/1/news?apikey={/* Your newsdata.io Api Key */}&q=crypto%20OR%20nft&language=en&page=${pageNo}`;
+  console.log(pageNo);
+
+  const news_data_url = `https://newsdata.io/api/1/news?apikey=pub_63005411bb37fa08c817c167ac02c464c317&q=crypto%20OR%20nft&language=en&page=${pageNo}`;
+  console.log(news_data_url);
   const nft_collection_url =
     'https://webit-nft-search.p.rapidapi.com/collections/trending?chain=ethereum&number=25';
 
@@ -45,16 +48,14 @@ export default function App() {
       method: 'GET',
       headers: {
         'X-RapidAPI-Host': 'webit-nft-search.p.rapidapi.com',
-        'X-RapidAPI-Key': {
-          /* Your Rapid Api Key */
-        },
+        'X-RapidAPI-Key': '6717f9e2cbmsh3597d90ff7f57a1p110b75jsnc8d9de89d957',
       },
     };
 
     let req = await fetch(url, options);
     let res = await req.json();
     let {data} = res;
-    console.log(data);
+    // console.log(data);
     // await MMKV.setArrayAsync('TrendingNftAddress', res.data.results);
   }
 
@@ -63,13 +64,11 @@ export default function App() {
       method: 'GET',
       headers: {
         'X-RapidAPI-Host': 'opensea13.p.rapidapi.com',
-        'X-RapidAPI-Key': {
-          /* Your Rapid Api Key */
-        },
+        'X-RapidAPI-Key': '6717f9e2cbmsh3597d90ff7f57a1p110b75jsnc8d9de89d957',
       },
     };
     let req = await fetch(
-      'https://opensea13.p.rapidapi.com/assets?order_direction=desc&limit=50&include_orders=false',
+      'https://opensea13.p.rapidapi.com/assets?order_direction=desc&limit=20&include_orders=true',
       options,
     );
     let res = await req.json();
@@ -79,9 +78,9 @@ export default function App() {
 
   useLayoutEffect(() => {
     // console.log(news_data_url);
-    fetchNewsData(news_data_url);
+    // fetchNewsData(news_data_url);
     // fetchNftCollection(nft_collection_url);
-    AssetData(asset_data_url);
+    // AssetData(asset_data_url);
   }, []);
 
   return (

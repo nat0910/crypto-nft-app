@@ -30,7 +30,7 @@ export default function HomeNews({navigation}) {
   }, []);
 
   // const news_data_url =
-  //   
+  //   'https://newsdata.io/api/1/news?apikey=pub_63005411bb37fa08c817c167ac02c464c317&q=nft&language=en ';
   // function fetchData(url) {
   //   try {
   //     axios.get(url).then(res => {
@@ -61,6 +61,9 @@ export default function HomeNews({navigation}) {
         elevation: 1,
         borderTopColor: COLORS.gray,
         borderTopWidth: 0.3,
+      }}
+      onPress={() => {
+        navigation.navigate('NewsProductPage', item);
       }}>
       <View
         style={{
@@ -79,7 +82,7 @@ export default function HomeNews({navigation}) {
             borderRadius: 10,
           }}
           onPress={() => {
-            Linking.openURL(item.link);
+            navigation.navigate('NewsProductPage', item);
           }}>
           <Image
             source={
@@ -95,9 +98,6 @@ export default function HomeNews({navigation}) {
               borderRadius: 10,
             }}
             resizeMethod="scale"
-            onPress={() => {
-              Linking.openURL(item.link);
-            }}
           />
         </TouchableWithoutFeedback>
         {/* News Article Details */}
@@ -131,7 +131,7 @@ export default function HomeNews({navigation}) {
                   numberOfLines={2}
                   ellipsizeMode="tail"
                   onPress={() => {
-                    Linking.openURL(item.link);
+                    navigation.navigate('NewsProductPage', item);
                   }}>
                   {item?.title}
                 </Text>

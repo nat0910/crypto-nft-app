@@ -21,7 +21,7 @@ export default function NftSearchScreen({navigation}) {
       headers: {
         accept: 'application/json',
         'X-API-Key':
-          'sallsoByzIVpaDd6NP0moa8lHiHzYV2xshBREBmLtgKroUv4qnOzbUI0gIuITUL0',
+          {/* Enter your Api key */},
       },
     };
 

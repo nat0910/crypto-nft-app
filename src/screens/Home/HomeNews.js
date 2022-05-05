@@ -30,7 +30,7 @@ export default function HomeNews({navigation}) {
   }, []);
 
   // const news_data_url =
-  //   'https://newsdata.io/api/1/news?apikey=pub_63005411bb37fa08c817c167ac02c464c317&q=nft&language=en ';
+  //   'https://newsdata.io/api/1/news?apikey={/* Enter your Api key */}&q=nft&language=en ';
   // function fetchData(url) {
   //   try {
   //     axios.get(url).then(res => {
